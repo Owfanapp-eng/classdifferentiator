@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
@@ -18,6 +21,12 @@ export default function Home() {
         <div className="flex flex-col items-center gap-4 text-center">
           <h1 className="text-4xl font-bold text-black dark:text-white">
             Differentiate and mark in under 60 seconds.
+            <Link href="/generate">
+  <button className="mt-6 bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+    Try free preview
+  </button>
+</Link>
+
           </h1>
           <p className="text-zinc-700 dark:text-zinc-300 max-w-2xl">
             Save hours of planning and marking. ClassDifferentiator supports UK
@@ -110,7 +119,8 @@ export default function Home() {
               </ul>
               <button className="mt-auto border rounded-lg py-2 font-semibold">
                 Join waitlist
-              </button>
+                
+                </button>
             </div>
 
             {/* Pro */}
@@ -126,6 +136,7 @@ export default function Home() {
                 <li>Export-ready resources</li>
               </ul>
               <button className="mt-auto bg-blue-600 text-white rounded-lg py-2 font-semibold hover:bg-blue-700">
+              
                 Get early access
               </button>
             </div>
