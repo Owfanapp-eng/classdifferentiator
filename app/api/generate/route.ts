@@ -1,13 +1,9 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-// ⚠️ TEMP MVP LIMIT (resets on server restart)
+// ⚠️ Simple MVP limit (resets on cold start)
 let requestCount = 0;
-const MAX_FREE_REQUESTS = 3;
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const MAX_FREE_REQUESTS = 5;
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +11,7 @@ export async function POST(req: Request) {
 
     if (requestCount > MAX_FREE_REQUESTS) {
       return NextResponse.json(
-        { error: "You’ve reached the free preview limit. Join the early access waitlist to unlock unlimited task generation." },
+        { error: "Free limit reached. Join waitlist for full access." },
         { status: 403 }
       );
     }
@@ -29,6 +25,11 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    // ✅ Instantiate OpenAI INSIDE the request
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     const prompt = `
 You are an experienced UK secondary English teacher.
@@ -49,7 +50,7 @@ Rules:
 - No mark schemes
 - No exam board references
 
-Return clearly as:
+Return the output clearly labelled as:
 SUPPORT:
 CORE:
 CHALLENGE:
